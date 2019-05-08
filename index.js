@@ -3,19 +3,28 @@
 const express = require('express');
 const db = require('./data/db.js');
 const server = express();
-const { users } = db;
 
 server.use(express.json());
 
-// Get Request
+// Base get request
+
+server.get('/', (req, res) => {
+    res.send('Successful get request')
+})
+
+// Get Users
 
 server.get('/api/users', (req, res) => {
-    users.find()
+    db.find()
         .then(allUsers => {
-            res.send(allUsers);
+            if (allUsers) {
+                res.status(200).json(allUsers)
+            } else {
+                res.status(404).json({message: "No users added yet."})
+            }
         })
         .catch(err => {
-            res.status(400).json({errorMessage: "Please provide name and bio for the user."})
+            res.status(500).json({errorMessage: "Please provide name and bio for the user."})
         })
 })
 
