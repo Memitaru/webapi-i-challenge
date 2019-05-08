@@ -24,7 +24,7 @@ server.get('/api/users', (req, res) => {
             }
         })
         .catch(err => {
-            res.status(500).json({errorMessage: "Please provide name and bio for the user."})
+            res.status(500).json({error: "The users information could not be retrieved."})
         })
 })
 
