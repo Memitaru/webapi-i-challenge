@@ -28,6 +28,39 @@ server.get('/api/users', (req, res) => {
         })
 })
 
+// Post a User
+
+server.post('/api/users', (req, res) => {
+    const newUser = req.body;
+    if (newUser.name && newUser.bio) {
+        db.insert(newUser)
+            .then(user => {
+                res.status(201).json(user)
+            })
+            .catch(err => {
+                res.status(500).json({error: "There was an error while saving the user object to the database."})
+            })
+    } else {
+        res.status(400).json({errorMessage: "Please provide name and bio for the user."})
+    }
+})
+
+// server.post('/api/users', (req, res) => {
+//     const newUser = req.body;
+//     console.log(`Name: ${newUser.name} and Bio: ${newUser.bio}`)
+//     db.insert(newUser)
+//         .then(user => {
+//             if (user.name && user.bio){
+//                 res.status(201).json(user)
+//             } else {
+//                 res.status(400).json({errorMessage: "Please provide name and bio for the user."})
+//             }
+//         })
+//         .catch(err => {
+//             res.status(500).json({error: "There was an error while saving the user object to the database."})
+//         })
+// })
+
 // Listening
 
 server.listen(9000, () => {
