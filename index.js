@@ -65,7 +65,18 @@ server.post('/api/users', (req, res) => {
     }
 })
 
+// Delete
 
+server.delete('/api/users/:id', (req, res)=>{
+    const { id } = req.params;
+    db.remove(id)
+        .then(removedUser => {
+            res.json(removedUser)
+        })
+        .catch(err => {
+            res.status(500).json({error: "The user could not be removed."})
+        })
+})
 
 // Listening
 
